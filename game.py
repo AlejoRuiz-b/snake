@@ -8,17 +8,16 @@ from food import Food
 import math
 
 
-
 class Game(object):
     def __init__(self):
         self.board = Board(800, 600)  # Create board
         self.board.setTitle("Snake")  # Set tittle
-        self.cell = Cell()  # Create Cell
-        self.food = Food(random.randint(0,784), random.randint(0,580))  # Create apple
+        self.cell = Cell(380,380)  # Create Cell
+        self.food = Food(random.randint(0, 784), random.randint(0, 580))  # Create apple
+        self.snake = []
         # screen.blit(self.cell, (200, 300))
         # self.board.setIcon()
 
-    # Main method that shows board and cell and get events for the movement
     def show_Cell_on_Board(self, screen, body, posX, posY):
         if posX <= 0:
             posX = 0
@@ -33,20 +32,22 @@ class Game(object):
     def show_Apple_on_Board(self, screen, body, posX, posY):
         screen.blit(body, (posX, posY))
 
-    # Calcule the distance between the snake and the apple
+    # Distance between the snake and the apple
 
     def eat(self, appleX, cellX, appleY, cellY):
         distance = math.sqrt((math.pow(appleX - cellX, 2)) + (math.pow(appleY - cellY, 2)))
         if distance < 15:
             return True
 
-
+    # Main method that shows board and cell and get events for the movement
     def run(self):
         screen = self.board.showScreen()
         body = self.cell.getCell()
         apple = self.food.getApple()
+        self.snake.append(body)
         posX, posY = 380, 380
         running = True
+
         while running:
             screen.fill((0, 0, 0))
 
@@ -91,11 +92,15 @@ class Game(object):
             eat = self.eat(self.food.getPosX(), posX, self.food.getPosY(), posY)
             if eat:
                 print("I ate him")
-                self.food.setPosX(random.randint(0,784))
-                self.food.setPosY(random.randint(0,580))
-                #self.show_Apple_on_Board()
+                self.food.setPosX(random.randint(0, 784))
+                self.food.setPosY(random.randint(0, 580))
+               # cell1= Cell(posX, posY)
+               # self.snake.append(cell1)
+                # self.show_Apple_on_Board()
 
-            self.show_Cell_on_Board(screen, body, posX, posY)
+            # Show cell and food
+            for i in range(len(self.snake)):
+                self.show_Cell_on_Board(screen, self.snake[i], posX, posY)
 
             self.show_Apple_on_Board(screen, apple, self.food.getPosX(), self.food.getPosY())
 
