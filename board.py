@@ -1,4 +1,5 @@
 import pygame
+from cell import Cell
 
 
 class Board(object):
@@ -43,6 +44,6 @@ class Board(object):
             pygame.display.update()
 
 
-board=Board(800,600)
+'''board=Board(800,600)
 board.running()
-board.setTitle("Snake")
+board.setTitle("Snake")'''
