@@ -42,10 +42,12 @@ class Game(object):
     # Main method that shows board and cell and get events for the movement
     def run(self):
         screen = self.board.showScreen()
-        body = self.cell.getCell()
         apple = self.food.getApple()
-        self.snake.append(body)
-        posX, posY = 380, 380
+        cell2 = Cell(450, 390)
+        self.snake.append(self.cell)
+        self.snake.append(cell2)
+        posX, posY = self.snake[0].getPosX(), self.snake[0].getPosY()
+
         running = True
 
         while running:
@@ -100,7 +102,8 @@ class Game(object):
 
             # Show cell and food
             for i in range(len(self.snake)):
-                self.show_Cell_on_Board(screen, self.snake[i], posX, posY)
+                self.show_Cell_on_Board(screen, self.snake[i].getCell(), posX, posY)
+                self.show_Cell_on_Board(screen, self.snake[1].getCell(), self.snake[1].getPosX(), self.snake[1].getPosY())
 
             self.show_Apple_on_Board(screen, apple, self.food.getPosX(), self.food.getPosY())
 
