@@ -8,6 +8,7 @@ class Board(object):
 
         self.pixelsX = pixelsX
         self.pixelsY = pixelsY
+        self.screen = pygame.display.set_mode((self.pixelsX, self.pixelsY))
         #self.screen = pygame.display.set_mode((self.pixelsX, self.pixelsY))
 
         #pygame.display.set_caption("Snake")
@@ -17,9 +18,11 @@ class Board(object):
         screen.blit(cell, (300, 380))
 
     def showScreen(self):
-        screen = pygame.display.set_mode((self.pixelsX, self.pixelsY))
+        self.screen.fill((0, 0, 0))
 
-        return screen
+    def getScreen(self):
+        return self.screen
+
 
     def setTitle(self, title):
         pygame.display.set_caption(title)
@@ -28,20 +31,7 @@ class Board(object):
         icon = pygame.image.load('snake.png')
         pygame.display.set_icon(icon)
 
-    # Title and Icon
-    def running(self):
-        screen = self.showScreen()
 
-        running = True
-        while running:
-            screen.fill((0, 0, 0))
-            for event in pygame.event.get():
-                # print(event) # to print clicks events and keyboard events
-                if event.type == pygame.QUIT:
-                    running = False
-
-            self.showcell(screen)
-            pygame.display.update()
 
 
 '''board=Board(800,600)

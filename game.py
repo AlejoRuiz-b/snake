@@ -2,6 +2,7 @@ import pygame
 import random
 
 from board import Board
+from snake import Snake
 
 from cell import Cell
 from food import Food
@@ -12,25 +13,12 @@ class Game(object):
     def __init__(self):
         self.board = Board(800, 600)  # Create board
         self.board.setTitle("Snake")  # Set tittle
-        self.cell = Cell(380,380)  # Create Cell
+        self.cell = Cell( 380, 380,2)  # Create Cell
         self.food = Food(random.randint(0, 784), random.randint(0, 580))  # Create apple
-        self.snake = []
+        self.snake =[]
         # screen.blit(self.cell, (200, 300))
         # self.board.setIcon()
 
-    def show_Cell_on_Board(self, screen, body, posX, posY):
-        if posX <= 0:
-            posX = 0
-        elif posX >= 784:
-            posX = 784
-        if posY <= 0:
-            posY = 0
-        elif posY >= 584:
-            posY = 584
-        screen.blit(body, (posX, posY))
-
-    def show_Apple_on_Board(self, screen, body, posX, posY):
-        screen.blit(body, (posX, posY))
 
     # Distance between the snake and the apple
 
@@ -41,17 +29,22 @@ class Game(object):
 
     # Main method that shows board and cell and get events for the movement
     def run(self):
-        screen = self.board.showScreen()
-        apple = self.food.getApple()
-        cell2 = Cell(450, 390)
+        self.board.showScreen()
+        screen = self.board.getScreen()
+        cell2 = Cell(390, 390,2)
+        #self.snake(cell2)
         self.snake.append(self.cell)
         self.snake.append(cell2)
+        print(self.snake[0])
         posX, posY = self.snake[0].getPosX(), self.snake[0].getPosY()
+
+        self.cell.draw(screen)
+
+        pygame.display.flip()
 
         running = True
 
         while running:
-            screen.fill((0, 0, 0))
 
             for event in pygame.event.get():
                 # print(event) # to print clicks events and keyboard events
@@ -62,49 +55,28 @@ class Game(object):
                 if event.type == pygame.KEYDOWN:  # KEYDOW is pressing that key or pressing any button on the keyboard
                     if event.key == pygame.K_LEFT:
                         print("Left arrow is pressed")
-                        self.cell.setPosX_Change(-0.25)
+                        self.cell.move_left()
+                        #self.snake[0].move_left()
+
                     if event.key == pygame.K_RIGHT:
                         print("Right arrow is pressed")
-                        self.cell.setPosX_Change(0.25)
+                        self.cell.move_right()
+                        #self.snake[0].move_right()
+
                     if event.key == pygame.K_UP:
-                        self.cell.setPosY_Change(-0.25)
+                        self.cell.move_up()
+                        #self.snake[0].move_up()
                         print("up arrow is pressed")
+
                     if event.key == pygame.K_DOWN:
-                        self.cell.setPosY_Change(0.25)
+                        self.cell.move_down()
+                        #self.snake[0].move_down()
                         print("Down arrow is pressed")
 
-                if event.type == pygame.KEYUP:  # KeyUP is releasing that press
-                    if event.key == pygame.K_LEFT:
-                        self.cell.setPosX_Change(-0.1)
-                        self.cell.setPosY_Change(0)
-                    if event.key == pygame.K_RIGHT:
-                        self.cell.setPosX_Change(0.1)
-                        self.cell.setPosY_Change(0)
-                    if event.key == pygame.K_UP:
-                        self.cell.setPosY_Change(-0.1)
-                        self.cell.setPosX_Change(0)
-                    if event.key == pygame.K_DOWN:
-                        self.cell.setPosY_Change(0.1)
-                        self.cell.setPosX_Change(0)
+            #self.snake[0].walk(screen)
+            self.cell.walk(screen)
+            #self.cell.draw(screen)
+            self.food.draw(screen)
 
-            posX += self.cell.getPosX_Change()
-            posY += self.cell.getPosY_Change()
-
-            # EAT
-            eat = self.eat(self.food.getPosX(), posX, self.food.getPosY(), posY)
-            if eat:
-                print("I ate him")
-                self.food.setPosX(random.randint(0, 784))
-                self.food.setPosY(random.randint(0, 580))
-               # cell1= Cell(posX, posY)
-               # self.snake.append(cell1)
-                # self.show_Apple_on_Board()
-
-            # Show cell and food
-            for i in range(len(self.snake)):
-                self.show_Cell_on_Board(screen, self.snake[i].getCell(), posX, posY)
-                self.show_Cell_on_Board(screen, self.snake[1].getCell(), self.snake[1].getPosX(), self.snake[1].getPosY())
-
-            self.show_Apple_on_Board(screen, apple, self.food.getPosX(), self.food.getPosY())
 
             pygame.display.update()

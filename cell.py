@@ -1,14 +1,17 @@
 import pygame
 
-
+SIZE = 16
 class Cell(object):
-    def __init__(self, posX, posY):
-        self.cell = pygame.image.load('square16pix.png')
-        self.posX = posX
-        self.posY = posY
-        self.posX_change = 0
-        self.posY_change = 0
 
+    def __init__(self, posX, posY,length):
+        #self.screen = screen
+        self.length = length
+        self.cell = pygame.image.load('square16pix.png')
+        self.posX = [SIZE]*length
+        self.posY = [SIZE]*length
+        self.direction= 'down'
+        '''self.posX = posX
+        self.posY = posY'''
 
     def setPosX(self, posX):
         self.posX = posX
@@ -22,22 +25,54 @@ class Cell(object):
     def getPosY(self):
         return self.posY
 
-
-
-    def setPosX_Change(self,posX_change):
-        self.posX_change = posX_change
-
-    def setPosY_Change(self, posY_change):
-        self.posY_change = posY_change
-
-    def getPosY_Change(self):
-        return self.posY_change
-
-    def getPosX_Change(self):
-        return self.posX_change
-
     def getCell(self):
         return self.cell
+
+
+
+    def move_left(self):
+        self.direction ='left'
+        #self.posX -= 10
+        #self.draw(screen)
+
+    def move_right(self):
+        self.direction = 'right'
+        #self.posX += 10
+        #self.draw(screen)
+
+    def move_up(self):
+        self.direction = 'up'
+        #self.posY -= 10
+        #self.draw(screen)
+
+    def move_down(self):
+        self.direction = 'down'
+        #self.posY += 10
+        #self.draw(screen)
+
+    def draw(self, screen):
+        screen.fill((0, 0, 0))
+        for i in range(self.length):
+            screen.blit(self.cell, (self.posX[i], self.posY[i]))
+        # pygame.display.flip()
+
+    def walk(self, screen):
+        for i in range (self.length-1,0,-1):
+            self.posX[i] = self.posX[i - 1]
+            self.posY[i] = self.posY[i - 1]
+
+        if self.direction =='left':
+            self.posX[0] -= SIZE
+        if self.direction == 'right':
+            self.posX[0] += SIZE
+        if self.direction == 'up':
+            self.posY[0] -= SIZE
+        if self.direction =='down':
+            self.posY[0] += SIZE
+
+        self.draw(screen)
+
+
 
 
 

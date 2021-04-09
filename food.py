@@ -35,3 +35,8 @@ class Food(object):
 
     def getApple(self):
         return self.apple
+
+    def draw(self, screen):
+        # screen.fill((0, 0, 0)) # I use update function instead
+        screen.blit(self.apple, (self.posX, self.posY))
+        # pygame.display.flip()
