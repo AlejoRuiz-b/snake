@@ -6,7 +6,7 @@ from snake import Snake
 
 from cell import Cell
 from food import Food
-import math
+import math, time
 
 
 class Game(object):
@@ -77,6 +77,7 @@ class Game(object):
             self.cell.walk(screen)
             #self.cell.draw(screen)
             self.food.draw(screen)
+            time.sleep(0.1)
 
 
             pygame.display.update()
