@@ -3,15 +3,16 @@ import pygame
 SIZE = 16
 class Cell(object):
 
-    def __init__(self, posX, posY,length):
+    def __init__(self, posX, posY):
         #self.screen = screen
-        self.length = length
+
         self.cell = pygame.image.load('square16pix.png')
+        '''self.length = length
         self.posX = [SIZE]*length
-        self.posY = [SIZE]*length
+        self.posY = [SIZE]*length'''
         self.direction= 'down'
-        '''self.posX = posX
-        self.posY = posY'''
+        self.posX = posX
+        self.posY = posY
 
     def setPosX(self, posX):
         self.posX = posX
@@ -30,7 +31,7 @@ class Cell(object):
 
 
 
-    def move_left(self):
+    '''def move_left(self):
         self.direction ='left'
         #self.posX -= 10
         #self.draw(screen)
@@ -53,11 +54,15 @@ class Cell(object):
     def draw(self, screen):
         screen.fill((0, 0, 0))
         for i in range(self.length):
-            screen.blit(self.cell, (self.posX[i], self.posY[i]))
-        # pygame.display.flip()
 
-    def walk(self, screen):
-        for i in range (self.length-1,0,-1):
+            screen.blit(self.cell, (self.posX[i], self.posY[i]))
+        # pygame.display.flip()'''
+
+    '''def walk(self, screen):
+        # assign the position to n of n-1
+        for i in range (self.length-1,0,-1): #range(start, stop, step)
+            print('pos Y 0 ',self.posY[0])
+            print('pos Y 1 ', self.posY[1])
             self.posX[i] = self.posX[i - 1]
             self.posY[i] = self.posY[i - 1]
 
@@ -69,8 +74,9 @@ class Cell(object):
             self.posY[0] -= SIZE
         if self.direction =='down':
             self.posY[0] += SIZE
+       
 
-        self.draw(screen)
+        self.draw(screen)'''
 
 
 
