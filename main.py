@@ -6,7 +6,12 @@ def main():
     # Initialize the pygame
     pygame.init()
     game = Game()
-    game.run()
+    game_over = False
+
+    while not game_over:
+
+        game_over = game.run()
+
 
 
 main()

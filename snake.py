@@ -1,6 +1,7 @@
 import pygame
 import math
 
+
 class Snake(object):
 
     def __init__(self, cell):
@@ -10,12 +11,9 @@ class Snake(object):
         self.direction = 'down'
 
     def appendCell(self, cell):
-        print (len(self.body))
-        cell.setPosX(self.body[len(self.body)-1].getPosX()) # adding the new cell to the last position of the snake
-        cell.setPosY(self.body[len(self.body)-1].getPosY())
+        cell.setPosX(self.body[len(self.body) - 1].getPosX())  # adding the new cell to the last position of the snake
+        cell.setPosY(self.body[len(self.body) - 1].getPosY())
         self.body.append(cell)
-
-
 
     def move_left(self):
         self.direction = 'left'
@@ -37,17 +35,23 @@ class Snake(object):
         # self.posY += 10
         # self.draw(screen)
 
+    def getHeadPossition(self):
+        return [self.body[0].getPosX(), self.body[0].getPosY()]
+
+
     def draw(self, screen):
         screen.fill((0, 0, 0))
         for i in range(len(self.body)):
             screen.blit(self.body[0].getCell(), (self.body[i].getPosX(), self.body[i].getPosY()))
 
-    def eat(self,food_posX, food_posY):
-        distance = math.sqrt((math.pow(food_posX - self.body[0].getPosX(), 2)) + (math.pow(food_posY - self.body[0].getPosY(), 2)))
+
+    def eat(self, food_posX, food_posY):
+        distance = math.sqrt(
+            (math.pow(food_posX - self.body[0].getPosX(), 2)) + (math.pow(food_posY - self.body[0].getPosY(), 2)))
         if distance < 15:
             return True
 
-    def walk(self, screen):
+    def walk(self, screen, ):
 
 
         for i in range(len(self.body) - 1, 0, -1):  # range(start, stop, step)
@@ -58,7 +62,6 @@ class Snake(object):
         if self.direction == 'left':
             posX = -16
             self.body[0].setPosX(self.body[0].getPosX() + posX)
-            #print(self.body[0].getPosX())
 
         if self.direction == 'right':
             posX = 16
@@ -71,6 +74,6 @@ class Snake(object):
         if self.direction == 'down':
             posY = 16
             self.body[0].setPosY(self.body[0].getPosY() + posY)
-            print(self.body[0].getPosY())
 
         self.draw(screen)
+
