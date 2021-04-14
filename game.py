@@ -1,18 +1,19 @@
-import pygame
+import math
 import random
+import time
+
+import pygame
 
 from board import Board
-from snake import Snake
-
 from cell import Cell
 from food import Food
-import math, time
+from snake import Snake
 
 
 class Game(object):
     def __init__(self):
-        self.width = 750
-        self.height = 650
+        self.width = 650
+        self.height = 550
         self.board = Board(self.width, self.height)  # Create board ancho, alto
         self.board.setTitle("Snake")  # Set tittle
         self.cell = Cell(self.width / 2, self.height / 2)  # Create Cell
@@ -21,7 +22,6 @@ class Game(object):
 
         self.cell1 = Cell((self.height / 2) + 10, (self.width / 2) + 10)  # Create Cell
         self.snake = Snake(self.cell1)
-
 
     # Distance between the snake and the apple
 
@@ -37,6 +37,11 @@ class Game(object):
     def showScore(self, screen, font):
         score = font.render("Score: " + str(self.score), True, (255, 255, 255))
         screen.blit(score, (10, 10))
+
+    def isCollition( self, headPosx, cellX, headPosy, cellY):
+        distance = math.sqrt((math.pow(headPosx - cellX, 2)) + (math.pow(headPosy - cellY, 2)))
+        if distance <= 0:
+            return True
 
     def gameOver(self, screen):
 
@@ -103,18 +108,29 @@ class Game(object):
                 # Show Snake, food and score
                 self.snake.walk(screen)
                 self.food.draw(screen)
+
                 self.showScore(screen, font)
+
+
 
                 # Get head position
                 head = [self.snake.getHeadPossition()[0], self.snake.getHeadPossition()[1]]
-                print('head: ', head[1])
-                #print(self.height - 16)
-                time.sleep(0.1)
-                if head[0] >= self.width- 20 or head[1] >= self.height - 25 or head[0] <= 0 or head[1] <= 16:
+
+                body=self.snake.getBody()
+                '''print('head: ', head[1])
+                print(self.height - 16)
+                print('Body: ',body)'''
+
+                for i in range(3,len(body)):
+                    if self.isCollition(head[0], body[i].getPosX(), head[1], body[i].getPosY()):
+                        print('is collition')
+
+
+                # Validate borders
+                if head[0] >= self.width - 20 or head[1] >= self.height - 18 or head[0] <= -1.5 or head[1] <= 0.9:
                     game_over = True
 
-
-
+                time.sleep(0.1)
                 pygame.display.update()
 
             else:

@@ -38,12 +38,13 @@ class Snake(object):
     def getHeadPossition(self):
         return [self.body[0].getPosX(), self.body[0].getPosY()]
 
+    def getBody(self):
+        return self.body
 
     def draw(self, screen):
         screen.fill((0, 0, 0))
         for i in range(len(self.body)):
             screen.blit(self.body[0].getCell(), (self.body[i].getPosX(), self.body[i].getPosY()))
-
 
     def eat(self, food_posX, food_posY):
         distance = math.sqrt(
@@ -51,8 +52,7 @@ class Snake(object):
         if distance < 15:
             return True
 
-    def walk(self, screen, ):
-
+    def walk(self, screen):
 
         for i in range(len(self.body) - 1, 0, -1):  # range(start, stop, step)
             # print(snake[i-1].getPosX())
@@ -76,4 +76,3 @@ class Snake(object):
             self.body[0].setPosY(self.body[0].getPosY() + posY)
 
         self.draw(screen)
-
