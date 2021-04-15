@@ -41,6 +41,9 @@ class Snake(object):
     def getBody(self):
         return self.body
 
+    def getDirection(self):
+        return self.direction
+
     def draw(self, screen):
         screen.fill((0, 0, 0))
         for i in range(len(self.body)):
