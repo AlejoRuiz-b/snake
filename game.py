@@ -62,8 +62,6 @@ class Game(object):
 
         screen = self.board.getScreen()
 
-        # pygame.display.flip()
-
         running = True
 
         while running:
@@ -122,7 +120,6 @@ class Game(object):
                     # Add score
                     self.addScore(1)
 
-                ##############################################################################
 
                 # Show Snake, food and score
                 self.snake.walk(screen)
@@ -147,7 +144,6 @@ class Game(object):
 
             else:
                 self.gameOver(screen)
-                # pygame.display.update()
 
         return game_over
 

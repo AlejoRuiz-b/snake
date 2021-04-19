@@ -22,18 +22,15 @@ class Snake(object):
 
     def move_right(self):
         self.direction = 'right'
-        # self.posX += 10
-        # self.draw(screen)
+
 
     def move_up(self):
         self.direction = 'up'
-        # self.posY -= 10
-        # self.draw(screen)
+
 
     def move_down(self):
         self.direction = 'down'
-        # self.posY += 10
-        # self.draw(screen)
+
 
     def getHeadPossition(self):
         return [self.body[0].getPosX(), self.body[0].getPosY()]
