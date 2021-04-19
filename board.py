@@ -9,9 +9,6 @@ class Board(object):
         self.pixelsX = pixelsX
         self.pixelsY = pixelsY
         self.screen = pygame.display.set_mode((self.pixelsX, self.pixelsY))
-        #self.screen = pygame.display.set_mode((self.pixelsX, self.pixelsY))
-
-        #pygame.display.set_caption("Snake")
 
     def showcell(self, screen):
         cell = pygame.image.load('square16pix.png')

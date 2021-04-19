@@ -14,7 +14,7 @@ class Game(object):
     def __init__(self):
 
         # Create board
-        self.width = 650
+        self.width = 750
         self.height = 550
         self.board = Board(self.width, self.height)  # Create board ancho, alto
         self.board.setTitle("Snake")  # Set tittle
@@ -31,14 +31,6 @@ class Game(object):
         # Create Score
         self.score = 0
 
-    # Distance between the snake and the apple
-
-    @staticmethod
-    def distance(appleX, cellX, appleY, cellY):
-        distance = math.sqrt((math.pow(appleX - cellX, 2)) + (math.pow(appleY - cellY, 2)))
-        if distance < 12:
-            return True
-
     def addScore(self, point):
         self.score += 1
 
@@ -53,11 +45,12 @@ class Game(object):
         if distance <= 0:
             return True
 
+    # Shows Game over title
     def gameOver(self, screen):
 
         font = pygame.font.Font('freesansbold.ttf', 40)
         game = font.render("GAME OVER", True, (255, 255, 255))
-        screen.blit(game, ((self.width/2), (self.height) / 2))
+        screen.blit(game, (220, (self.height) / 2))
         pygame.display.flip()
 
     # Main method that shows board and cell and get events for the movement
@@ -120,8 +113,8 @@ class Game(object):
                 eat = self.snake.eat(self.food.getPosX(), self.food.getPosY())
                 if eat:
                     # Move the apple each time the snake eat it
-                    self.food.setPosX(random.randint(10, self.width - 18))
-                    self.food.setPosY(random.randint(10, self.height - 16))
+                    self.food.setPosX(random.randint(20, self.width - 18))
+                    self.food.setPosY(random.randint(20, self.height - 16))
 
                     # create a new cell and add it to the snake
                     cell = Cell(390, 390)
