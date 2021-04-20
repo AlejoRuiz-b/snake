@@ -139,7 +139,7 @@ class Game(object):
                 if head[0] >= self.width - 20 or head[1] >= self.height - 18 or head[0] <= -1.5 or head[1] <= 0.9:
                     game_over = True
 
-                time.sleep(0.1)
+                time.sleep(0.07)
                 pygame.display.update()
 
             else:
