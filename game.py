@@ -31,6 +31,9 @@ class Game(object):
         # Create Score
         self.score = 0
 
+        # AI
+        self.reward = 0
+
     def addScore(self, point):
         self.score += 1
 
@@ -53,6 +56,9 @@ class Game(object):
         screen.blit(game, (220, (self.height) / 2))
         pygame.display.flip()
 
+    def restart(self):
+        self.__init__()
+
     # Main method that shows board and cell and get events for the movement
     def run(self):
 
@@ -72,9 +78,13 @@ class Game(object):
                     running = False
                     game_over = True
 
-                print(self.snake.direction)
                 # IF keystroke is pressed check whether its right or left
                 if event.type == pygame.KEYDOWN:  # KEYDOW is pressing that key or pressing any button on the keyboard
+
+                    if event.key == pygame.K_RETURN:
+                        self.restart()
+                        game_over = False
+
                     if self.snake.direction == 'down':
                         if event.key == pygame.K_LEFT:
                             self.snake.move_left()
@@ -89,7 +99,7 @@ class Game(object):
                             # self.cell.move_down()
                             # self.snake[0].move_down()
                             self.snake.move_down()
-                    if self.snake.direction  == 'right':
+                    if self.snake.direction == 'right':
                         if event.key == pygame.K_UP:
                             self.snake.move_up()
 
@@ -105,7 +115,6 @@ class Game(object):
                         if event.key == pygame.K_RIGHT:
                             self.snake.move_right()
 
-
             if not game_over:
                 # EAT
                 eat = self.snake.eat(self.food.getPosX(), self.food.getPosY())
@@ -119,7 +128,6 @@ class Game(object):
                     self.snake.appendCell(cell)
                     # Add score
                     self.addScore(1)
-
 
                 # Show Snake, food and score
                 self.snake.walk(screen)
@@ -146,4 +154,3 @@ class Game(object):
                 self.gameOver(screen)
 
         return game_over
-
