@@ -31,6 +31,9 @@ class Game(object):
         # Create Score
         self.score = 0
 
+        # AI
+        self.reward = 0
+
     def addScore(self, point):
         self.score += 1
 
@@ -42,7 +45,7 @@ class Game(object):
     # Calculate distance between the head and the snake body
     def isCollition(self, headPosx, cellX, headPosy, cellY):
         distance = math.sqrt((math.pow(headPosx - cellX, 2)) + (math.pow(headPosy - cellY, 2)))
-        if distance <= 0:
+        if distance <= 0 or headPosx >= self.width - 20 or headPosy >= self.height - 18 or headPosx <= -1.5 or headPosy <= 0.9:
             return True
 
     # Shows Game over title
@@ -52,6 +55,9 @@ class Game(object):
         game = font.render("GAME OVER", True, (255, 255, 255))
         screen.blit(game, (220, (self.height) / 2))
         pygame.display.flip()
+
+    def restart(self):
+        self.__init__()
 
     # Main method that shows board and cell and get events for the movement
     def run(self):
@@ -72,9 +78,13 @@ class Game(object):
                     running = False
                     game_over = True
 
-                print(self.snake.direction)
                 # IF keystroke is pressed check whether its right or left
                 if event.type == pygame.KEYDOWN:  # KEYDOW is pressing that key or pressing any button on the keyboard
+
+                    if event.key == pygame.K_RETURN:
+                        self.restart()
+                        game_over = False
+
                     if self.snake.direction == 'down':
                         if event.key == pygame.K_LEFT:
                             self.snake.move_left()
@@ -89,7 +99,7 @@ class Game(object):
                             # self.cell.move_down()
                             # self.snake[0].move_down()
                             self.snake.move_down()
-                    if self.snake.direction  == 'right':
+                    if self.snake.direction == 'right':
                         if event.key == pygame.K_UP:
                             self.snake.move_up()
 
@@ -105,7 +115,6 @@ class Game(object):
                         if event.key == pygame.K_RIGHT:
                             self.snake.move_right()
 
-
             if not game_over:
                 # EAT
                 eat = self.snake.eat(self.food.getPosX(), self.food.getPosY())
@@ -120,7 +129,6 @@ class Game(object):
                     # Add score
                     self.addScore(1)
 
-
                 # Show Snake, food and score
                 self.snake.walk(screen)
                 self.food.draw(screen)
@@ -131,13 +139,9 @@ class Game(object):
                 head = [self.snake.getHeadPossition()[0], self.snake.getHeadPossition()[1]]
 
                 body = self.snake.getBody()
-                for i in range(3, len(body)):
+                for i in range(1, len(body)):
                     if self.isCollition(head[0], body[i].getPosX(), head[1], body[i].getPosY()):
                         game_over = True
-
-                # Validate borders
-                if head[0] >= self.width - 20 or head[1] >= self.height - 18 or head[0] <= -1.5 or head[1] <= 0.9:
-                    game_over = True
 
                 time.sleep(0.07)
                 pygame.display.update()
@@ -146,4 +150,3 @@ class Game(object):
                 self.gameOver(screen)
 
         return game_over
-
